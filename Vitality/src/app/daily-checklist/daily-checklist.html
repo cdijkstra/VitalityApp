@@ -1,0 +1,9 @@
+<p>daily-checklist works!</p>
+<ul>
+  @for (item of checklistItems; track item.name) {
+  <li>
+    <input type="checkbox" [checked]="item.completed" (change)="item.completed = !item.completed" />
+    {{ item.name }}
+  </li>
+  }
+</ul>
