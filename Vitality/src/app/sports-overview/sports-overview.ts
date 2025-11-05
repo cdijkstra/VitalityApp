@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { sports as sportsData, Sport } from '../models/sport.model';
+import { Sport } from '../models/sport.model';
+import {PocketbaseService} from "../../services/pocketbase.service";
 
 @Component({
   selector: 'app-sports-overview',
@@ -14,7 +15,12 @@ export class SportsOverviewComponent {
   private favoriteKey = 'favoriteSports';
   favoriteSports = signal<string[]>(this.getFavorites());
 
-  sports = signal<Sport[]>([...sportsData]);
+  pocketBase = inject(PocketbaseService);
+  private sports = signal<Sport[]>([]);
+
+  async ngOnInit() {
+    this.sports.set((await this.pocketBase.getSports()).items as unknown as Sport[]);
+  }
 
   getFavorites(): string[] {
     const favs = localStorage.getItem(this.favoriteKey);

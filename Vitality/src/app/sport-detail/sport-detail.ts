@@ -1,7 +1,7 @@
 import { Component, inject, input, Input, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Sport, sports } from '../models/sport.model';
+import { Sport } from '../models/sport.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
