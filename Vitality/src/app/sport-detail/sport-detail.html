@@ -1,42 +1,43 @@
-<button
-  type="button"
-  (click)="goBack()"
-  class="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
->
-  Terug naar menu
-</button>
-
-@if (selectedSport()?.image) {
-<img
-  [src]="selectedSport()?.image"
-  [alt]="selectedSport()?.titel"
-  class="max-w-xs w-full rounded shadow mb-4"
-/>
-}
-
-<p class="text-xl font-semibold mb-2">
-  Leuk dat je ook van <strong>{{ selectedSport()?.titel }}</strong> houdt!
-</p>
-<p class="mb-2 text-gray-700">
-  {{ selectedSport()?.description }}
-</p>
-
-<div>
-  <h2>Ingeschreven collega's</h2>
-  <ul>
-    @for (collega of collegaNames(); track collega) {
-
-    <li>{{ collega }}</li>
-    }
-  </ul>
-</div>
-
-<p class="mb-4">
-  De whatsapp group voor deze sport vind je op:
-  <a
-    [href]="selectedSport()?.socialLink"
-    target="_blank"
-    class="text-green-600 underline hover:text-green-800"
-    >WhatsApp groep</a
+<div class="flex flex-col items-center max-w-2xl mx-auto">
+  <button
+    type="button"
+    (click)="goBack()"
+    class="mb-6 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
   >
-</p>
+    Terug naar menu
+  </button>
+
+  @if (selectedSport()?.image) {
+  <img
+    [src]="selectedSport()?.image"
+    [alt]="selectedSport()?.titel"
+    class="max-w-xs w-full rounded shadow mb-6"
+  />
+  }
+
+  <p class="text-xl font-semibold mb-3 text-center">
+    Leuk dat je ook van <strong>{{ selectedSport()?.titel }}</strong> houdt!
+  </p>
+  <p class="mb-4 text-gray-700 text-center">
+    {{ selectedSport()?.description }}
+  </p>
+
+  <div class="w-full text-center mb-4">
+    <h2 class="text-lg font-semibold mb-3">Ingeschreven collega's</h2>
+    <ul class="list-none space-y-2">
+      @for (collega of collegaNames(); track collega) {
+      <li>{{ collega }}</li>
+      }
+    </ul>
+  </div>
+
+  <p class="mb-4 text-center">
+    De whatsapp group voor deze sport vind je op:
+    <a
+      [href]="selectedSport()?.socialLink"
+      target="_blank"
+      class="text-green-600 underline hover:text-green-800"
+      >WhatsApp groep</a
+    >
+  </p>
+</div>
