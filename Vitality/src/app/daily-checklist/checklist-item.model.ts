@@ -12,7 +12,7 @@ export const checklistItems: ChecklistItem[] = [
   },
   {
     name: 'Brush teeth',
-    description: 'Brush teeth with toothpaste',
+    description: 'Brush teeth with toothpaste or vodka',
     completed: false,
   },
   {
