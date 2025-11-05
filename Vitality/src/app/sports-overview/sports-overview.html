@@ -1,6 +1,6 @@
 <h2>Sporten waarin wij actief zijn</h2>
 <ul>
   @for (sport of famousSports; track sport) {
-    <li>{{ sport }}</li>
+    <li><a [routerLink]="['/sports', sport.toLowerCase()]">{{ sport }}</a></li>
   }
 </ul>
