@@ -1,6 +1,10 @@
-<h2>Zoek groepen / collega's op hobbies</h2>
-<ul>
-  @for (sport of famousSports; track sport) {
-    <li><a [routerLink]="['/sports', sport.toLowerCase()]">{{ sport }}</a></li>
-  }
-</ul>
+<div>
+  <h2>Zoek groepen / collega's op hobbies</h2>
+  <ul>
+    @for (sport of sports(); track sport.name) {
+    <li>
+      <a [routerLink]="['/sports', sport.name]">{{ sport.name }}</a>
+    </li>
+    }
+  </ul>
+</div>

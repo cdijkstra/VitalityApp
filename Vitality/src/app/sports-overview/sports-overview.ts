@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { sports } from '../models/sport.model';
 
 @Component({
   selector: 'app-sports-overview',
@@ -9,16 +10,6 @@ import { RouterModule } from '@angular/router';
   templateUrl: './sports-overview.html',
   styleUrl: './sports-overview.css',
 })
-
 export class SportsOverviewComponent {
-  famousSports: string[] = [
-    'Voetbal',
-    'Basketbal',
-    'Tennis',
-    'Cricket',
-    'Zwemmen',
-    'Badminton',
-    'Golf',
-    'Rugby'
-  ];
+  sports = signal(sports);
 }

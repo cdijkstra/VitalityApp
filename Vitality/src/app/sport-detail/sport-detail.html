@@ -1,2 +1,14 @@
-<p>Leuk dat je ook van <strong>{{ sportName() }}</strong> houdt!</p>
-<p>De whatsapp group voor deze sport vind je op </p>
+<p>
+  Leuk dat je ook van <strong>{{ sportName() }}</strong> houdt!
+</p>
+<p>
+  {{ selectedSport()?.description }}
+</p>
+<p>
+  De whatsapp group voor deze sport vind je op:
+  <a [href]="selectedSport()?.socialLink" target="_blank">{{ selectedSport()?.socialLink }}</a>
+</p>
+
+<pre>
+    {{ selectedSport() | json }}
+</pre>
