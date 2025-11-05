@@ -1,8 +1,8 @@
-import { Component, inject, input, Input, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Sport } from '../models/sport.model';
 import { CommonModule } from '@angular/common';
+import { Component, inject, input, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PocketbaseService } from '../../services/pocketbase.service';
+import { Sport } from '../models/sport.model';
 
 @Component({
   selector: 'app-sport-detail',
@@ -19,11 +19,21 @@ export class SportDetailComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
+  pocketBase = inject(PocketbaseService);
+
   constructor() {
-    this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
-      const sportName = params.get('name') ?? '';
-      this.selectedSport.set(sports.find((sport: Sport) => sport.name === sportName));
+    this.route.params.subscribe((params) => {
+      this.sportName.set(params['name']);
     });
+  }
+
+  async ngOnInit() {
+    const selectedSport = (await this.pocketBase.getSports()).find(
+      (sport: Sport) => sport.titel === this.sportName()
+    );
+    if (selectedSport) {
+      this.selectedSport.set(selectedSport);
+    }
   }
 
   goBack() {

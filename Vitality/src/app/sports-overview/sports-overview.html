@@ -1,19 +1,24 @@
 <div class="max-w-xl mx-auto p-6 bg-white rounded-lg shadow">
   <h2 class="text-2xl font-bold mb-4 text-green-700">Zoek groepen / collega's op hobbies</h2>
   <ul class="space-y-2">
-    @for (sport of getSortedSports(); track sport.name) {
-      <li [class]="`flex items-center justify-between ${isFavorite(sport.name) ? 'bg-green-100' : 'bg-blue-100'}`">
-        <a [routerLink]="['/sports', sport.name]" class="block px-4 py-2 rounded hover:bg-green-200 text-green-800 font-medium transition">
-          {{ sport.name }}
-        </a>
-        <button
-          type="button"
-          (click)="toggleFavorite(sport.name)"
-          class="ml-4 px-3 py-1 rounded transition text-sm font-semibold @if (isFavorite(sport.name)) { bg-green-500 text-white } @else { bg-blue-500 text-white }"
-        >
-          @if (isFavorite(sport.name)) { Verlaat groep } @else { Deelnemen }
-        </button>
-      </li>
+    @for (sport of sports(); track sport.titel) {
+    <li
+      [class]="`flex items-center justify-between ${isFavorite(sport.titel) ? 'bg-green-100' : 'bg-blue-100'}`"
+    >
+      <a
+        [routerLink]="['/sports', sport.titel]"
+        class="block px-4 py-2 rounded hover:bg-green-200 text-green-800 font-medium transition"
+      >
+        {{ sport.titel }}
+      </a>
+      <button
+        type="button"
+        (click)="toggleFavorite(sport.titel)"
+        class="ml-4 px-3 py-1 rounded transition text-sm font-semibold @if (isFavorite(sport.titel)) { bg-green-500 text-white } @else { bg-blue-500 text-white }"
+      >
+        @if (isFavorite(sport.titel)) { Verlaat groep } @else { Deelnemen }
+      </button>
+    </li>
     }
   </ul>
 </div>

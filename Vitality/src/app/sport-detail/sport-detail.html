@@ -1,16 +1,31 @@
-<button type="button" (click)="goBack()" class="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">Terug naar menu</button>
+<button
+  type="button"
+  (click)="goBack()"
+  class="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+>
+  Terug naar menu
+</button>
 
 @if (selectedSport()?.image) {
-  <img [src]="selectedSport()?.image" [alt]="sportName()" class="max-w-xs w-full rounded shadow mb-4" />
+<img
+  [src]="selectedSport()?.image"
+  [alt]="selectedSport()?.titel"
+  class="max-w-xs w-full rounded shadow mb-4"
+/>
 }
 
 <p class="text-xl font-semibold mb-2">
-  Leuk dat je ook van <strong>{{ selectedSport()?.name }}</strong> houdt!
+  Leuk dat je ook van <strong>{{ selectedSport()?.titel }}</strong> houdt!
 </p>
 <p class="mb-2 text-gray-700">
   {{ selectedSport()?.description }}
 </p>
 <p class="mb-4">
   De whatsapp group voor deze sport vind je op:
-  <a [href]="selectedSport()?.socialLink" target="_blank" class="text-green-600 underline hover:text-green-800">WhatsApp groep</a>
+  <a
+    [href]="selectedSport()?.socialLink"
+    target="_blank"
+    class="text-green-600 underline hover:text-green-800"
+    >WhatsApp groep</a
+  >
 </p>
