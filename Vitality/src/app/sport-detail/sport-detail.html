@@ -20,6 +20,17 @@
 <p class="mb-2 text-gray-700">
   {{ selectedSport()?.description }}
 </p>
+
+<div>
+  <h2>Ingeschreven collega's</h2>
+  <ul>
+    @for (collega of selectedSport()?.ingeschreven_collegas; track collega) {
+
+    <li>{{ collega }}</li>
+    }
+  </ul>
+</div>
+
 <p class="mb-4">
   De whatsapp group voor deze sport vind je op:
   <a

@@ -4,5 +4,5 @@ export interface Sport {
   description?: string;
   image?: string;
   socialLink?: string;
-  ingeschreven_collegas: string[];
+  ingeschreven_collegas?: string[];
 }
