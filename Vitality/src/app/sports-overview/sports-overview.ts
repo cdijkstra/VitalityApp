@@ -13,44 +13,50 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './sports-overview.css',
 })
 export class SportsOverviewComponent {
-  private favoriteKey = 'favoriteSports';
-  favoriteSports = signal<string[]>(this.getFavorites());
-
   pocketBase = inject(PocketbaseService);
   sports = signal<Sport[]>([]);
+  currentUserId: string | null = null;
 
   async ngOnInit() {
+    const user = await this.pocketBase.getUser();
+    this.currentUserId = user?.id || null;
     const sports = await this.pocketBase.getSports();
-
     this.sports.set(sports);
   }
 
-  getFavorites(): string[] {
-    const favs = localStorage.getItem(this.favoriteKey);
-    return favs ? JSON.parse(favs) : [];
-  }
-
   isFavorite(sportName: string): boolean {
-    return this.favoriteSports().includes(sportName);
+    if (!this.currentUserId) return false;
+    const sport = this.sports().find((s) => s.titel === sportName);
+    if (!sport || !sport.ingeschreven_collegas) return false;
+    return sport.ingeschreven_collegas.includes(this.currentUserId);
   }
 
-  toggleFavorite(sportName: string) {
-    const favs = this.favoriteSports();
-    let updated: string[];
-    if (favs.includes(sportName)) {
-      updated = favs.filter((name) => name !== sportName);
+  async toggleFavorite(sportName: string) {
+    const sport = this.sports().find((s) => s.titel === sportName);
+    if (!sport) return;
+
+    const isCurrentlyFavorite = this.isFavorite(sportName);
+
+    // Fetch the latest sport data before updating to ensure we have current state
+    const latestSport = await this.pocketBase.getSportById(sport.id);
+
+    if (isCurrentlyFavorite) {
+      alert('Je bent uitgeschreven van deze sport');
+      await this.pocketBase.schrijfUitVanSport(latestSport);
     } else {
-      updated = [...favs, sportName];
+      alert('Je bent ingeschreven voor deze sport');
+      await this.pocketBase.doeMeeAanSport(latestSport);
     }
-    this.favoriteSports.set(updated);
-    localStorage.setItem(this.favoriteKey, JSON.stringify(updated));
+
+    // Refresh the sports list to get updated data
+    const updatedSports = await this.pocketBase.getSports();
+    this.sports.set(updatedSports);
   }
 
   getSortedSports(): Sport[] {
-    const favs = this.favoriteSports();
     return [...this.sports()].sort((a, b) => {
-      const aFav = favs.includes(a.titel);
-      const bFav = favs.includes(b.titel);
+      const aFav = this.isFavorite(a.titel);
+      const bFav = this.isFavorite(b.titel);
       if (aFav && !bFav) return -1;
       if (!aFav && bFav) return 1;
       return 0;

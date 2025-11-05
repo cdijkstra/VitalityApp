@@ -12,8 +12,10 @@
         {{ sport.titel }}
       </a>
       <div class="flex items-center">
-        <span class="inline-flex items-center px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs font-semibold min-w-[2rem] text-center mr-2">
-          {{ sport.ingeschreven_collegas.length }}
+        <span
+          class="inline-flex items-center px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs font-semibold min-w-[2rem] text-center mr-2"
+        >
+          {{ sport.ingeschreven_collegas?.length || 0 }}
           <mat-icon class="ml-1 text-gray-500" aria-label="Aantal collega's">person</mat-icon>
         </span>
         <button
