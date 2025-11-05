@@ -5,6 +5,7 @@ import { DailyChecklist } from './daily-checklist/daily-checklist';
 
 export const routes: Routes = [
   { path: '', component: SportsOverviewComponent },
+  { path: 'sports', component: SportsOverviewComponent },
   { path: 'sports/:name', component: SportDetailComponent },
   { path: 'daily-checklist', component: DailyChecklist },
 ];
