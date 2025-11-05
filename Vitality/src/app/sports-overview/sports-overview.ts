@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sports-overview',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './sports-overview.html',
   styleUrl: './sports-overview.css',
 })
+
 export class SportsOverviewComponent {
   famousSports: string[] = [
     'Voetbal',
