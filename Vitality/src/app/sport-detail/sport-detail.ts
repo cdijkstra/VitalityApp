@@ -1,6 +1,6 @@
 import { Component, inject, input, Input, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Sport, sports } from '../models/sport.model';
 import { CommonModule } from '@angular/common';
 
@@ -17,11 +17,16 @@ export class SportDetailComponent {
 
   selectedSport = signal<Sport | undefined>(undefined);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   constructor() {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
       const sportName = params.get('name') ?? '';
       this.selectedSport.set(sports.find((sport: Sport) => sport.name === sportName));
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/sports']);
   }
 }
