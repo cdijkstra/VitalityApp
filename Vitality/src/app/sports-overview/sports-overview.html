@@ -11,13 +11,19 @@
       >
         {{ sport.titel }}
       </a>
-      <button
-        type="button"
-        (click)="toggleFavorite(sport.titel)"
-        class="ml-4 px-3 py-1 rounded transition text-sm font-semibold @if (isFavorite(sport.titel)) { bg-green-500 text-white } @else { bg-blue-500 text-white }"
-      >
-        @if (isFavorite(sport.titel)) { Verlaat groep } @else { Deelnemen }
-      </button>
+      <div class="flex items-center">
+        <span class="inline-flex items-center px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs font-semibold min-w-[2rem] text-center mr-2">
+          {{ sport.ingeschreven_collegas.length }}
+          <mat-icon class="ml-1 text-gray-500" aria-label="Aantal collega's">person</mat-icon>
+        </span>
+        <button
+          type="button"
+          (click)="toggleFavorite(sport.titel)"
+          class="px-3 py-1 rounded transition text-sm font-semibold @if (isFavorite(sport.titel)) { bg-green-500 text-white } @else { bg-blue-500 text-white }"
+        >
+          @if (isFavorite(sport.titel)) { Verlaat groep } @else { Deelnemen }
+        </button>
+      </div>
     </li>
     }
   </ul>
