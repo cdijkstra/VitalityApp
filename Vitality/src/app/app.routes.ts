@@ -5,6 +5,8 @@ import { DailyChecklist } from './daily-checklist/daily-checklist';
 import { EventsComponent } from './events/events';
 import { AboutComponent } from './about/about';
 import { ProfileComponent } from './profile/profile.component';
+import { SignInComponent } from './auth/sign-in.component';
+import { SignOutComponent } from './auth/sign-out.component';
 
 export const routes: Routes = [
   { path: '', component: SportsOverviewComponent },
@@ -13,5 +15,7 @@ export const routes: Routes = [
   { path: 'daily-checklist', component: DailyChecklist },
   { path: 'events', component: EventsComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'sign-in', component: SignInComponent },
+  { path: 'sign-out', component: SignOutComponent },
   { path: 'about', component: AboutComponent },
 ];
