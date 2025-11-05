@@ -1,0 +1,9 @@
+/* Basic styling for the profile component */
+.profile .avatar { font-size: 1.25rem; }
+.profile input, .profile select, .profile textarea { background: #fff; }
+
+/* Header steps small text should be visible on gradient */
+.profile > div.bg-gradient-to-r + .p-6 .text-gray-100 { color: rgba(255,255,255,0.9); }
+
+/* Progress bar styling tweaks */
+.profile .bg-indigo-500 { background-color: #6366f1; }
