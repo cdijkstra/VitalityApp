@@ -1,6 +1,7 @@
 import { Component, signal, computed, effect, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChecklistItem, checklistItems } from './checklist-item.model';
+import { MatIconModule } from '@angular/material/icon';
 
 const STORAGE_KEY = 'daily-checklist-items';
 const STORAGE_DATE_KEY = 'daily-checklist-date';
@@ -8,7 +9,7 @@ const STORAGE_DATE_KEY = 'daily-checklist-date';
 @Component({
   selector: 'app-daily-checklist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './daily-checklist.html',
   styleUrl: './daily-checklist.css',
 })

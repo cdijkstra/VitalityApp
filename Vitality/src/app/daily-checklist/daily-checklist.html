@@ -45,6 +45,10 @@
             {{ item.name }}
           </span>
           <span class="text-sm text-gray-600">{{ item.description }}</span>
+            <span class="text-xs text-blue-500 font-semibold mt-1 flex items-center gap-1">
+              <mat-icon class="text-blue-400" style="font-size: 1rem;">schedule</mat-icon>
+                {{ item.reminderTime }}
+            </span>
         </div>
       </label>
       <div class="flex gap-2">
