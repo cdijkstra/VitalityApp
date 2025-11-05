@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject, input, Input, signal} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -9,11 +9,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './sport-detail.css',
 })
 export class SportDetailComponent {
-  sportName = '';
+  public readonly sportNameInput = input<string>('');
+  public sportName = signal<string>('');
+  private route = inject(ActivatedRoute);
 
-  constructor(private route: ActivatedRoute) {
+  ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.sportName = params.get('name') ?? '';
+      if (!this.sportNameInput()) {
+        this.sportName.set(params.get('name') ?? '');
+      } else {
+        this.sportName.set(this.sportNameInput());
+      }
     });
   }
 }
