@@ -6,8 +6,8 @@ export interface ChecklistItem {
 
 export const checklistItems: ChecklistItem[] = [
   {
-    name: 'Wake up',
-    description: 'Wake up at 6:00 AM',
+    name: 'Boulder more',
+    description: 'Boulder with some great colleagues',
     completed: false,
   },
   {
