@@ -8,7 +8,7 @@ import { PocketbaseService } from '../../../services/pocketbase.service';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   user: any | null = null;

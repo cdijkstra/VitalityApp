@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { UserProfile, defaultProfile } from './profile.model';
+import {Component, NgZone, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule} from '@angular/router';
+import {UserProfile, defaultProfile} from './profile.model';
+import {PocketbaseService} from '../../services/pocketbase.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,12 +12,20 @@ import { UserProfile, defaultProfile } from './profile.model';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  profile: UserProfile = { ...defaultProfile };
+  profile: UserProfile = {...defaultProfile};
+  user: any | null = null;
 
-  private storageKey = 'vitality_user_profile_v1';
+  constructor(private pocket: PocketbaseService, private zone: NgZone) {
+  }
 
-  ngOnInit(): void {
-    this.loadProfile();
+  async ngOnInit(): Promise<void> {
+    try {
+      this.user = await this.pocket.getUser();
+      console.log(this.user)
+    } catch (error) {
+      console.error('Failed to load user', error);
+      this.user = null;
+    }
   }
 
   // Basic computed properties useful for a fitness app
@@ -38,37 +47,42 @@ export class ProfileComponent implements OnInit {
     return Math.round(bmr * activityFactor);
   }
 
-  get stepsProgressPercent(): number {
-    return Math.min(100, Math.round(((this.profile.stepsToday ?? 0) / (this.profile.stepsGoal ?? 8000)) * 100));
-  }
-
-  // Small helper to update a value (used by template)
   updateField<K extends keyof UserProfile>(field: K, value: UserProfile[K]) {
-    this.profile = { ...this.profile, [field]: value };
-  }
-
-  saveProfile() {
-    try {
-      localStorage.setItem(this.storageKey, JSON.stringify(this.profile));
-    } catch (e) {
-      console.warn('Could not save profile to localStorage', e);
-    }
-  }
-
-  loadProfile() {
-    try {
-      const raw = localStorage.getItem(this.storageKey);
-      if (raw) {
-        const parsed = JSON.parse(raw) as UserProfile;
-        this.profile = { ...defaultProfile, ...parsed };
-      }
-    } catch (e) {
-      console.warn('Could not load profile from localStorage', e);
-    }
+    this.profile = {...this.profile, [field]: value};
   }
 
   resetProfile() {
-    this.profile = { ...defaultProfile };
-    this.saveProfile();
+    this.profile = {...defaultProfile};
+  }
+
+  // Save profile: if the user is signed in, update their record in PocketBase
+  async saveProfile() {
+    if (!this.user?.id) {
+      console.warn('No authenticated user – cannot save profile to server.');
+      return;
+    }
+
+    const payload: any = {
+      id: this.user.id,
+      name: this.profile.name,
+      age: this.profile.age,
+      gender: this.profile.gender,
+      heightCm: this.profile.heightCm,
+      weightKg: this.profile.weightKg,
+      stepsGoal: this.profile.stepsGoal,
+      goals: this.profile.goals,
+      activityLevel: this.profile.activityLevel,
+    };
+
+    try {
+      const updated = await this.pocket.updateUser(payload);
+      // Ensure Angular picks up the change if PocketBase doesn't run in Angular zone
+      this.zone.run(() => {
+        this.user = updated;
+      });
+      console.log('Profile saved', updated);
+    } catch (err) {
+      console.error('Failed to save profile', err);
+    }
   }
 }

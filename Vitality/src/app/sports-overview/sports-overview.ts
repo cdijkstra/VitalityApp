@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Sport } from '../models/sport.model';
 import { PocketbaseService } from '../../services/pocketbase.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-sports-overview',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule ],
   templateUrl: './sports-overview.html',
   styleUrl: './sports-overview.css',
 })
