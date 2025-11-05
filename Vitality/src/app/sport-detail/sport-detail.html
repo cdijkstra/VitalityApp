@@ -1,5 +1,9 @@
+@if (selectedSport()?.image) {
+  <img [src]="selectedSport()?.image" [alt]="sportName()" style="max-width: 300px; display: block; margin-bottom: 1rem;" />
+}
+
 <p>
-  Leuk dat je ook van <strong>{{ sportName() }}</strong> houdt!
+  Leuk dat je ook van <strong>{{ selectedSport()?.name }}</strong> houdt!
 </p>
 <p>
   {{ selectedSport()?.description }}
@@ -8,7 +12,3 @@
   De whatsapp group voor deze sport vind je op:
   <a [href]="selectedSport()?.socialLink" target="_blank">{{ selectedSport()?.socialLink }}</a>
 </p>
-
-<pre>
-    {{ selectedSport() | json }}
-</pre>

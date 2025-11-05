@@ -7,45 +7,39 @@ export interface Sport {
 
 export const sports: Sport[] = [
   {
-    name: 'Voetbal',
-    description: 'Voetbal is een sport die gespeeld wordt met een bal',
-    image: 'https://via.placeholder.com/150',
-    socialLink: 'https://www.facebook.com/voetbal',
-  },
-  {
     name: 'Basketbal',
-    description: 'Basketbal is een sport die gespeeld wordt met een bal',
-    image: 'https://via.placeholder.com/150',
-    socialLink: 'https://www.facebook.com/basketbal',
-  },
-  {
-    name: 'Tennis',
-    description: 'Tennis is een sport die gespeeld wordt met een racket en een bal',
-    image: 'https://via.placeholder.com/150',
-    socialLink: 'https://www.facebook.com/tennis',
+    description: 'Dunk als een baas en scoor driepunters!',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png',
+    socialLink: 'https://chat.whatsapp.com/BasketbalGroupID',
   },
   {
     name: 'Yoga',
-    description: 'Yoga is een sport die gericht is op lichaam en geest',
-    image: 'https://via.placeholder.com/150',
-    socialLink: 'https://www.facebook.com/yoga',
+    description: 'Word zo flexibel als een kat en vind je innerlijke rust.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Yoga_asanas.jpg',
+    socialLink: 'https://chat.whatsapp.com/YogaGroupID',
   },
   {
     name: 'Padel',
-    description: 'Padel is een sport die gespeeld wordt met een racket en een bal',
-    image: 'https://via.placeholder.com/150',
-    socialLink: 'https://www.facebook.com/padel',
+    description: 'Sla, smash en win op de padelbaan!',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Padel_court.jpg',
+    socialLink: 'https://chat.whatsapp.com/PadelGroupID',
   },
   {
     name: 'Boulderen',
-    description: 'Boulderen is een sport waarbij je korte routes zonder touw beklimt',
-    image: 'https://via.placeholder.com/150',
-    socialLink: 'https://www.facebook.com/boulderen',
+    description: 'Klim als een ninja over de bouldermuren.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Bouldering_competition.jpg',
+    socialLink: 'https://chat.whatsapp.com/BoulderenGroupID',
   },
   {
     name: 'Klimmen',
-    description: 'Klimmen is een sport waarbij je routes beklimt met touw',
-    image: 'https://via.placeholder.com/150',
-    socialLink: 'https://www.facebook.com/klimmen',
+    description: 'Bereik nieuwe hoogtes en hang als een aap aan de rotsen.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/3/3c/Climbing_in_Sicily.jpg',
+    socialLink: 'https://chat.whatsapp.com/KlimmenGroupID',
   },
+  {
+    name: 'Wakeboarden',
+    description: 'Scheur over het water en maak vette sprongen!',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Wakeboarding_on_the_Lake.jpg',
+    socialLink: 'https://chat.whatsapp.com/WakeboardenGroupID',
+  }
 ];
