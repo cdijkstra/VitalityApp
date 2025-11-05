@@ -1,8 +1,8 @@
-import {Component, inject, signal} from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Sport } from '../models/sport.model';
-import {PocketbaseService} from "../../services/pocketbase.service";
+import { PocketbaseService } from '../../services/pocketbase.service';
 
 @Component({
   selector: 'app-sports-overview',
@@ -16,10 +16,12 @@ export class SportsOverviewComponent {
   favoriteSports = signal<string[]>(this.getFavorites());
 
   pocketBase = inject(PocketbaseService);
-  private sports = signal<Sport[]>([]);
+  sports = signal<Sport[]>([]);
 
   async ngOnInit() {
-    this.sports.set((await this.pocketBase.getSports()).items as unknown as Sport[]);
+    const sports = await this.pocketBase.getSports();
+
+    this.sports.set(sports);
   }
 
   getFavorites(): string[] {
@@ -35,7 +37,7 @@ export class SportsOverviewComponent {
     const favs = this.favoriteSports();
     let updated: string[];
     if (favs.includes(sportName)) {
-      updated = favs.filter(name => name !== sportName);
+      updated = favs.filter((name) => name !== sportName);
     } else {
       updated = [...favs, sportName];
     }
@@ -46,8 +48,8 @@ export class SportsOverviewComponent {
   getSortedSports(): Sport[] {
     const favs = this.favoriteSports();
     return [...this.sports()].sort((a, b) => {
-      const aFav = favs.includes(a.name);
-      const bFav = favs.includes(b.name);
+      const aFav = favs.includes(a.titel);
+      const bFav = favs.includes(b.titel);
       if (aFav && !bFav) return -1;
       if (!aFav && bFav) return 1;
       return 0;

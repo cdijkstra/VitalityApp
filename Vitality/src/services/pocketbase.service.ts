@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import PocketBase from 'pocketbase';
+import { Sport } from '../app/models/sport.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class PocketbaseService {
   }
 
   async getSports() {
-    return this.pb.collection('sports').getList(1, 100);
+    return this.pb.collection<Sport>('sports').getFullList();
   }
 
   async getEvents() {

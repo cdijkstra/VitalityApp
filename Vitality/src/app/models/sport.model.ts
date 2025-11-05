@@ -1,7 +1,7 @@
 export interface Sport {
-  name: string;
-  description: string;
-  image: string;
-  socialLink: string;
+  id: string;
+  titel: string;
+  description?: string;
+  image?: string;
+  socialLink?: string;
 }
-
