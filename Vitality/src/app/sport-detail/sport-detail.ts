@@ -18,6 +18,7 @@ export class SportDetailComponent {
   selectedSport = signal<Sport | undefined>(undefined);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  collegaNames = signal<string[]>([]);
 
   pocketBase = inject(PocketbaseService);
 
@@ -34,6 +35,17 @@ export class SportDetailComponent {
     if (selectedSport) {
       this.selectedSport.set(selectedSport);
     }
+
+    const collegaNames = await this.getCollegaNames();
+    this.collegaNames.set(collegaNames);
+  }
+
+  async getCollegaNames() {
+    const allusers = await this.pocketBase.getAllUsers();
+    const collegaNames = allusers.filter((user) =>
+      this.selectedSport()?.ingeschreven_collegas?.includes(user.id)
+    );
+    return collegaNames.map((user) => user['email']);
   }
 
   goBack() {

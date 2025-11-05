@@ -24,7 +24,7 @@
 <div>
   <h2>Ingeschreven collega's</h2>
   <ul>
-    @for (collega of selectedSport()?.ingeschreven_collegas; track collega) {
+    @for (collega of collegaNames(); track collega) {
 
     <li>{{ collega }}</li>
     }

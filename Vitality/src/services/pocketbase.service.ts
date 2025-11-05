@@ -14,6 +14,10 @@ export class PocketbaseService {
     this.pb = new PocketBase(url);
   }
 
+  async getAllUsers() {
+    return this.pb.collection('users').getFullList();
+  }
+
   async getDailyChecklistItems() {
     return this.pb.collection('daily_checklist').getList(1, 100);
   }

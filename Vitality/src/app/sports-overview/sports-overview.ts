@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-sports-overview',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule ],
+  imports: [CommonModule, RouterModule, MatIconModule],
   templateUrl: './sports-overview.html',
   styleUrl: './sports-overview.css',
 })
@@ -16,6 +16,7 @@ export class SportsOverviewComponent {
   pocketBase = inject(PocketbaseService);
   sports = signal<Sport[]>([]);
   currentUserId: string | null = null;
+  collegaNames = signal<string[]>([]);
 
   async ngOnInit() {
     const user = await this.pocketBase.getUser();
