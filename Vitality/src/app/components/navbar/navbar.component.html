@@ -17,11 +17,14 @@
           <a routerLink="/profile" routerLinkActive="text-indigo-600"
              class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600 cursor-pointer">Profile</a>
 
-          @if (user) {
-            <span class="px-3 py-2 text-sm text-gray-700">Hello, {{ user.name || user.username || user.email }}</span>
-            <a routerLink="/sign-out" class="px-3 py-2 rounded-md text-sm font-medium text-red-600 border border-red-100">Sign out</a>
+          @if (user()) {
+            <span
+              class="px-3 py-2 text-sm text-gray-700">Hello, {{ user()?.name || user()?.username || user()?.email }}</span>
+            <a routerLink="/sign-out"
+               class="px-3 py-2 rounded-md text-sm font-medium text-red-600 border border-red-100">Sign out</a>
           } @else {
-            <a routerLink="/sign-in" class="px-3 py-2 rounded-md text-sm font-medium text-indigo-600 border border-indigo-100">Sign in</a>
+            <a routerLink="/sign-in"
+               class="px-3 py-2 rounded-md text-sm font-medium text-indigo-600 border border-indigo-100">Sign in</a>
           }
         </div>
       </div>

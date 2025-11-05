@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit, signal, WritableSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {UserProfile, defaultProfile} from './profile.model';
@@ -13,18 +13,23 @@ import {PocketbaseService} from '../../services/pocketbase.service';
 })
 export class ProfileComponent implements OnInit {
   profile: UserProfile = {...defaultProfile};
-  user: any | null = null;
+  user: WritableSignal<any | null> = signal(null);
 
   constructor(private pocket: PocketbaseService, private zone: NgZone) {
   }
 
   async ngOnInit(): Promise<void> {
     try {
-      this.user = await this.pocket.getUser();
-      console.log(this.user)
+      const u = await this.pocket.getUser();
+      console.log(u);
+      this.zone.run(() => {
+        this.user.set(u);
+        // populate display name fallback
+        this.profile.name = this.user()?.name || this.profile.name;
+      });
     } catch (error) {
       console.error('Failed to load user', error);
-      this.user = null;
+      this.zone.run(() => this.user.set(null));
     }
   }
 
@@ -57,13 +62,13 @@ export class ProfileComponent implements OnInit {
 
   // Save profile: if the user is signed in, update their record in PocketBase
   async saveProfile() {
-    if (!this.user?.id) {
+    if (!this.user()?.id) {
       console.warn('No authenticated user – cannot save profile to server.');
       return;
     }
 
     const payload: any = {
-      id: this.user.id,
+      id: this.user()?.id,
       name: this.profile.name,
       age: this.profile.age,
       gender: this.profile.gender,
@@ -78,7 +83,7 @@ export class ProfileComponent implements OnInit {
       const updated = await this.pocket.updateUser(payload);
       // Ensure Angular picks up the change if PocketBase doesn't run in Angular zone
       this.zone.run(() => {
-        this.user = updated;
+        this.user.set(updated);
       });
       console.log('Profile saved', updated);
     } catch (err) {

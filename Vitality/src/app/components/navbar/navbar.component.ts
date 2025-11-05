@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { PocketbaseService } from '../../../services/pocketbase.service';
+import {Component, OnInit, signal, WritableSignal, NgZone} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {PocketbaseService} from '../../../services/pocketbase.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,16 +11,19 @@ import { PocketbaseService } from '../../../services/pocketbase.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  user: any | null = null;
+  // user is now an Angular signal for reactive reads in the template
+  user: WritableSignal<any | null> = signal(null);
 
-  constructor(public pocket: PocketbaseService) {}
+  constructor(public pocket: PocketbaseService) {
+  }
 
   async ngOnInit(): Promise<void> {
     try {
-      this.user = await this.pocket.getUser();
+      const u = await this.pocket.getUser();
+      this.user.set(u);
     } catch (error) {
       console.error('Failed to load user', error);
-      this.user = null;
+      this.user.set(null);
     }
   }
 }
